@@ -2,6 +2,7 @@ import { Router } from 'express';
 import Product from '../models/Product.js';
 import { isDbConnected } from '../lib/db.js';
 import { products as seedProducts, SITE } from '../seed/data.js';
+import { protect, adminOnly } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -138,6 +139,53 @@ router.get('/:idOrSlug', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Failed to fetch product' });
+  }
+});
+
+// ── Admin: Create product ────────────────────────────────────────────────────
+router.post('/', protect, adminOnly, async (req, res) => {
+  try {
+    if (!isDbConnected()) {
+      return res.status(503).json({ message: 'Database required for admin operations' });
+    }
+    const product = await Product.create(req.body);
+    res.status(201).json({ product });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ message: err.message || 'Failed to create product' });
+  }
+});
+
+// ── Admin: Update product ────────────────────────────────────────────────────
+router.put('/:id', protect, adminOnly, async (req, res) => {
+  try {
+    if (!isDbConnected()) {
+      return res.status(503).json({ message: 'Database required for admin operations' });
+    }
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!product) return res.status(404).json({ message: 'Product not found' });
+    res.json({ product });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ message: err.message || 'Failed to update product' });
+  }
+});
+
+// ── Admin: Delete product ────────────────────────────────────────────────────
+router.delete('/:id', protect, adminOnly, async (req, res) => {
+  try {
+    if (!isDbConnected()) {
+      return res.status(503).json({ message: 'Database required for admin operations' });
+    }
+    const product = await Product.findByIdAndDelete(req.params.id);
+    if (!product) return res.status(404).json({ message: 'Product not found' });
+    res.json({ message: 'Product deleted' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to delete product' });
   }
 });
 

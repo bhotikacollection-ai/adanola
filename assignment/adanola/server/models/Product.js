@@ -20,7 +20,7 @@ const productSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
-      enum: ['shop', 'active', 'sweats', 'spring-summer', 'hoodies', 'shorts', 't-shirts', 'leggings', 'sets'],
+      enum: ['shop', 'shirts', 'dresses', 'jackets', 'bags', 'jewelry', 'handmade', 'hemp', 'new', 'active', 'sweats', 'spring-summer', 'hoodies', 'shorts', 't-shirts', 'leggings', 'sets'],
     },
     tags: [String],
     colors: [colorSchema],
