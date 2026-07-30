@@ -1,9 +1,15 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { formatPrice } from '../lib/api';
+import { siteConfigApi } from '../lib/api';
 
 export default function Cart() {
   const { items, subtotal, removeItem, setQty } = useCart();
+  const [config, setConfig] = useState({ whatsappNumber: '', contactEmail: 'hello@bhotika.com', freeShippingThreshold: 100 });
+
+  useEffect(() => {
+    siteConfigApi.get().then((d) => { if (d) setConfig(d); }).catch(() => {});
+  }, []);
 
   if (items.length === 0) {
     return (
@@ -16,12 +22,18 @@ export default function Cart() {
     );
   }
 
-  // Build a WhatsApp order message
   const orderText = items.map((i) =>
     `• ${i.name} (${[i.color, i.size].filter(Boolean).join(', ')}) x${i.quantity} — $${(i.price * i.quantity).toFixed(2)}`
   ).join('\n');
+
+  const emailBody = encodeURIComponent(`Hi Bhotika,\n\nI'd like to order:\n\n${orderText}\n\nTotal: $${subtotal.toFixed(2)}\n\nPlease confirm availability and shipping cost.\n\nThank you!`);
   const whatsappMsg = encodeURIComponent(`Hi Bhotika! I'd like to order:\n\n${orderText}\n\nTotal: $${subtotal.toFixed(2)}`);
-  const whatsappUrl = `https://wa.me/977XXXXXXXXXX?text=${whatsappMsg}`;
+
+  const whatsappUrl = config.whatsappNumber
+    ? `https://wa.me/${config.whatsappNumber}?text=${whatsappMsg}`
+    : null;
+
+  const remaining = Math.max(0, (config.freeShippingThreshold || 100) - subtotal);
 
   return (
     <div className="section cart-layout">
@@ -75,21 +87,31 @@ export default function Cart() {
         </div>
         <div className="cart-summary__row">
           <span>Shipping</span>
-          <span>On enquiry</span>
+          <span>{remaining === 0 ? 'FREE' : 'On enquiry'}</span>
         </div>
+        {remaining > 0 && (
+          <p style={{ fontSize: 11, color: 'var(--color-smoke-charcoal)', margin: '4px 0 8px' }}>
+            Add ${remaining.toFixed(2)} more for free shipping.
+          </p>
+        )}
         <div className="cart-summary__total">
           <span>Total</span>
           <span>${subtotal.toFixed(2)}</span>
         </div>
 
-        {/* Order via WhatsApp */}
-        <a href={whatsappUrl} target="_blank" rel="noreferrer" className="btn-fill btn-fill--block" style={{ textDecoration: 'none', textAlign: 'center', display: 'block', padding: '12px 24px' }}>
-          📲 Order via WhatsApp
-        </a>
+        {whatsappUrl ? (
+          <a href={whatsappUrl} target="_blank" rel="noreferrer" className="btn-fill btn-fill--block"
+            style={{ textDecoration: 'none', textAlign: 'center', display: 'block', padding: '12px 24px' }}>
+            📲 Order via WhatsApp
+          </a>
+        ) : (
+          <div style={{ background: '#f0ebe0', borderRadius: 6, padding: '10px 12px', fontSize: 12, color: '#888', textAlign: 'center', marginBottom: 8 }}>
+            WhatsApp not set up yet
+          </div>
+        )}
 
-        {/* Order via Email */}
         <a
-          href={`mailto:hello@bhotika.com?subject=Order Enquiry&body=${encodeURIComponent(`Hi Bhotika,\n\nI'd like to order:\n\n${orderText}\n\nPlease confirm availability and shipping cost.\n\nThank you!`)}`}
+          href={`mailto:${config.contactEmail}?subject=Order Enquiry&body=${emailBody}`}
           className="btn-ghost"
           style={{ width: '100%', marginTop: 8, textAlign: 'center', display: 'block' }}
         >
@@ -101,7 +123,7 @@ export default function Cart() {
         </Link>
 
         <p style={{ fontSize: 11, color: 'var(--color-smoke-charcoal)', marginTop: 16, lineHeight: 1.5, textAlign: 'center' }}>
-          🇳🇵 We'll confirm your order, availability, and shipping cost personally.
+          🇳🇵 We'll confirm your order and shipping personally.
         </p>
       </aside>
     </div>

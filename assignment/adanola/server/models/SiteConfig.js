@@ -8,6 +8,9 @@ const siteConfigSchema = new mongoose.Schema(
     heroCta: { type: String, default: 'SHOP COLLECTION' },
     heroImages: [{ type: String }],
     editorialImages: [{ type: String }],
+    whatsappNumber: { type: String, default: '' },
+    contactEmail: { type: String, default: 'hello@bhotika.com' },
+    freeShippingThreshold: { type: Number, default: 100 },
   },
   { timestamps: true }
 );

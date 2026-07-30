@@ -15,6 +15,9 @@ const DEFAULT = {
     'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=1200&q=80',
     'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1200&q=80',
   ],
+  whatsappNumber: '',
+  contactEmail: 'hello@bhotika.com',
+  freeShippingThreshold: 100,
 };
 
 export default function SiteContent() {
@@ -34,6 +37,9 @@ export default function SiteContent() {
             heroCta: data.heroCta || DEFAULT.heroCta,
             heroImages: data.heroImages?.length ? data.heroImages : DEFAULT.heroImages,
             editorialImages: data.editorialImages?.length ? data.editorialImages : DEFAULT.editorialImages,
+            whatsappNumber: data.whatsappNumber || '',
+            contactEmail: data.contactEmail || DEFAULT.contactEmail,
+            freeShippingThreshold: data.freeShippingThreshold ?? 100,
           });
         }
       })
@@ -167,7 +173,34 @@ export default function SiteContent() {
         <button type="submit" disabled={saving} style={styles.submitBtn}>
           {saving ? 'Saving…' : '💾 Save & Publish'}
         </button>
-      </form>
+        </section>
+
+        {/* Contact & Ordering */}
+        <section style={styles.section}>
+          <h2 style={styles.sectionTitle}>📞 Contact & Ordering</h2>
+          <p style={{ fontSize: 12, color: '#888', marginBottom: 16 }}>
+            Used in the cart so customers can contact you to place orders.
+          </p>
+          <div style={styles.row}>
+            <label style={styles.label}>
+              WhatsApp Number
+              <span style={{ fontSize: 10, color: '#aaa', fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>Include country code e.g. 9779841234567</span>
+              <input style={styles.input} value={form.whatsappNumber} onChange={(e) => set('whatsappNumber', e.target.value)} placeholder="9779841234567" />
+            </label>
+            <label style={styles.label}>
+              Contact Email
+              <input style={styles.input} type="email" value={form.contactEmail} onChange={(e) => set('contactEmail', e.target.value)} placeholder="hello@bhotika.com" />
+            </label>
+          </div>
+          <label style={{ ...styles.label, maxWidth: 220 }}>
+            Free Shipping Above ($)
+            <input style={styles.input} type="number" min="0" value={form.freeShippingThreshold} onChange={(e) => set('freeShippingThreshold', Number(e.target.value))} />
+          </label>
+        </section>
+
+        <button type="submit" disabled={saving} style={styles.submitBtn}>
+          {saving ? 'Saving…' : '💾 Save & Publish'}
+        </button>
     </div>
   );
 }

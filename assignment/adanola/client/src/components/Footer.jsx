@@ -1,6 +1,14 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { siteConfigApi } from '../lib/api';
 
 export default function Footer() {
+  const [email, setEmail] = useState('hello@bhotika.com');
+
+  useEffect(() => {
+    siteConfigApi.get().then((d) => { if (d?.contactEmail) setEmail(d.contactEmail); }).catch(() => {});
+  }, []);
+
   return (
     <footer className="site-footer">
       <div className="site-footer__grid">
@@ -23,7 +31,7 @@ export default function Footer() {
           <Link to="/account">Account</Link>
           <Link to="/cart">Bag</Link>
           <Link to="/wishlist">Wishlist</Link>
-          <a href="mailto:hello@bhotika.com">Contact</a>
+          <a href={`mailto:${email}`}>Contact</a>
         </div>
         <div className="site-footer__col">
           <h4>Info</h4>

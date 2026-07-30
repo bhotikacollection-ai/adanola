@@ -13,6 +13,9 @@ const DEFAULT = {
   heroCta: SITE.hero.cta,
   heroImages: SITE.hero.images,
   editorialImages: SITE.editorial.map((e) => e.image),
+  whatsappNumber: '',
+  contactEmail: 'hello@bhotika.com',
+  freeShippingThreshold: 100,
 };
 
 // GET /api/site-config — public, used by frontend
@@ -36,10 +39,10 @@ router.put('/', protect, adminOnly, async (req, res) => {
     return res.status(503).json({ message: 'Database required' });
   }
   try {
-    const { announcement, heroHeadline, heroCta, heroImages, editorialImages } = req.body;
+    const { announcement, heroHeadline, heroCta, heroImages, editorialImages, whatsappNumber, contactEmail, freeShippingThreshold } = req.body;
     const config = await SiteConfig.findOneAndUpdate(
       { key: 'main' },
-      { announcement, heroHeadline, heroCta, heroImages, editorialImages },
+      { announcement, heroHeadline, heroCta, heroImages, editorialImages, whatsappNumber, contactEmail, freeShippingThreshold },
       { new: true, upsert: true, runValidators: true }
     );
     res.json(config);
