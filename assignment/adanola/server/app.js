@@ -5,6 +5,7 @@ import authRouter from './routes/auth.js';
 import wishlistRouter from './routes/wishlist.js';
 import ordersRouter from './routes/orders.js';
 import uploadRouter from './routes/upload.js';
+import siteConfigRouter from './routes/siteConfig.js';
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/wishlist', wishlistRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/upload', uploadRouter);
+app.use('/api/site-config', siteConfigRouter);
 
 app.use((err, _req, res, _next) => {
   console.error(err);

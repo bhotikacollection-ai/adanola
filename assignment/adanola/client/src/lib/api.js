@@ -39,6 +39,11 @@ export const productsApi = {
   site: () => api('/products/site'),
 };
 
+export const siteConfigApi = {
+  get: () => api('/site-config'),
+  update: (body) => api('/site-config', { method: 'PUT', body: JSON.stringify(body) }),
+};
+
 export const authApi = {
   register: (body) => api('/auth/register', { method: 'POST', body: JSON.stringify(body) }),
   login: (body) => api('/auth/login', { method: 'POST', body: JSON.stringify(body) }),

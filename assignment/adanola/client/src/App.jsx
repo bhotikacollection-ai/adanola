@@ -7,7 +7,6 @@ import Home from './pages/Home';
 import Shop from './pages/Shop';
 import Product from './pages/Product';
 import Cart from './pages/Cart';
-import Checkout from './pages/Checkout';
 import Wishlist from './pages/Wishlist';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -33,7 +32,6 @@ export default function App() {
               <Route path="shop" element={<Shop />} />
               <Route path="product/:slug" element={<Product />} />
               <Route path="cart" element={<Cart />} />
-              <Route path="checkout" element={<Checkout />} />
               <Route path="wishlist" element={<Wishlist />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
@@ -41,7 +39,7 @@ export default function App() {
               <Route path="*" element={<NotFound />} />
             </Route>
 
-            {/* ── Admin routes (no Layout wrapper, own sidebar) ── */}
+            {/* ── Admin routes ── */}
             <Route
               path="admin"
               element={

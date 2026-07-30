@@ -5,7 +5,7 @@ import MarqueeStrip from '../components/MarqueeStrip';
 import ProductGrid from '../components/ProductGrid';
 import SplitEditorial from '../components/SplitEditorial';
 import CategoryTabs from '../components/CategoryTabs';
-import { productsApi } from '../lib/api';
+import { productsApi, siteConfigApi } from '../lib/api';
 import { useReveal } from '../hooks/useReveal';
 
 export default function Home() {
@@ -23,13 +23,15 @@ export default function Home() {
 
     async function load() {
       try {
-        const [siteRes, trendRes, newRes] = await Promise.all([
+        const [siteRes, trendRes, newRes, configRes] = await Promise.all([
           productsApi.site().catch(() => null),
           productsApi.list({ trending: 'true', limit: 8 }),
           productsApi.list({ newArrival: 'true', limit: 4 }),
+          siteConfigApi.get().catch(() => null),
         ]);
         if (cancelled) return;
-        setSite(siteRes);
+        // merge DB site config over seed SITE data
+        setSite(configRes ? { ...siteRes, hero: { headline: configRes.heroHeadline, cta: configRes.heroCta, ctaLink: '/shop', images: configRes.heroImages }, editorial: (configRes.editorialImages || []).map((img, i) => ({ image: img, alt: `Editorial ${i+1}` })), announcement: configRes.announcement, filters: siteRes?.filters } : siteRes);
         setTrending(trendRes.products || []);
         setNews(newRes.products || []);
       } catch (err) {
@@ -40,9 +42,7 @@ export default function Home() {
     }
 
     load();
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, []);
 
   useEffect(() => {
