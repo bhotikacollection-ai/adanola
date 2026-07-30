@@ -1,9 +1,10 @@
 const PHRASES = [
-  'The Ultimate staples',
-  'Move freely',
-  'Editorial activewear',
-  'Quiet essentials',
-  'New & Trending',
+  'Handcrafted in Nepal 🇳🇵',
+  'Hemp. Natural. Sustainable.',
+  'Wear the Himalayas',
+  'Artisan Made',
+  'भोटिका — Bhotika',
+  'Slow Fashion. Real Craft.',
 ];
 
 export default function MarqueeStrip() {

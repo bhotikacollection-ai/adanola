@@ -1,22 +1,22 @@
 /* Adanola design tokens — from DESIGN.md. All colors via CSS variables only. */
 
 :root {
-  /* Colors */
-  --color-carbon-ink: #000000;
-  --color-paper-white: #ffffff;
-  --color-soft-mist: #e5e7eb;
-  --color-warm-fog: #f0efe7;
-  --color-blush-sand: #f5ebd5;
-  --color-smoke-charcoal: #333333;
-  --color-onyx: #1d1d1d;
-  --color-stone-gray: #cccccc;
-  --color-slate: #2f3440;
-  --color-olive-drab: #636355;
-  --color-maroon-clay: #523037;
-  --color-deep-iris: #222845;
-  --color-pewter: #677284;
-  --color-driftwood: #dfccbe;
-  --color-pale-tide: #badce4;
+  /* Colors — Bhotika earthy Himalayan palette */
+  --color-carbon-ink: #1a1a18;
+  --color-paper-white: #faf8f4;
+  --color-soft-mist: #ede9e0;
+  --color-warm-fog: #f0ebe0;
+  --color-blush-sand: #e8d5b7;
+  --color-smoke-charcoal: #3d3830;
+  --color-onyx: #1a1a18;
+  --color-stone-gray: #b8b0a0;
+  --color-slate: #4a5568;
+  --color-olive-drab: #5c6b3a;
+  --color-maroon-clay: #8b3a2a;
+  --color-deep-iris: #2d3561;
+  --color-pewter: #7d7568;
+  --color-driftwood: #c8aa87;
+  --color-pale-tide: #a8c5b5;
 
   /* RGB helpers */
   --rgb-carbon-ink: 0, 0, 0;

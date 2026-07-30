@@ -13,7 +13,7 @@ export default function Home() {
   const [trending, setTrending] = useState([]);
   const [news, setNews] = useState([]);
   const [filtered, setFiltered] = useState([]);
-  const [tab, setTab] = useState('hoodies');
+  const [tab, setTab] = useState('shirts');
   const [loading, setLoading] = useState(true);
   const [filterLoading, setFilterLoading] = useState(true);
   const filterRef = useReveal();
@@ -122,11 +122,11 @@ export default function Home() {
             className="product-section__title"
             style={{ marginBottom: 12, fontWeight: 400, fontSize: 'var(--text-display)' }}
           >
-            Quiet essentials
+            Wear the Himalayas
           </h2>
           <p style={{ fontSize: 14, color: 'var(--color-smoke-charcoal)', marginBottom: 24, lineHeight: 1.5 }}>
-            A gallery-like canvas where the garment is the only colour. Built for movement,
-            photographed like a lookbook.
+            Every piece handcrafted in Nepal by local artisans. Hemp, handwoven textiles,
+            and Himalayan stones — slow fashion with a soul.
           </p>
           <Link to="/shop" className="btn-ghost">
             Shop all

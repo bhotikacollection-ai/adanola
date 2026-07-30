@@ -6,9 +6,9 @@ import { IconBag, IconClose, IconHeart, IconMenu, IconSearch, IconUser } from '.
 
 const LINKS = [
   { to: '/shop', label: 'SHOP' },
-  { to: '/shop?category=active', label: 'ACTIVE' },
-  { to: '/shop?category=sweats', label: 'SWEATS' },
-  { to: '/shop?category=spring-summer', label: 'SPRING SUMMER' },
+  { to: '/shop?category=hemp', label: 'HEMP' },
+  { to: '/shop?category=handmade', label: 'HANDMADE' },
+  { to: '/shop?category=new', label: 'NEW ARRIVALS' },
 ];
 
 export default function Navbar({ onOpenSearch }) {
@@ -44,7 +44,7 @@ export default function Navbar({ onOpenSearch }) {
         </div>
 
         <Link to="/" className="nav__brand" onClick={() => setOpen(false)}>
-          ADANOLA
+          BHOTIKA
         </Link>
 
         <div className="nav__icons">
